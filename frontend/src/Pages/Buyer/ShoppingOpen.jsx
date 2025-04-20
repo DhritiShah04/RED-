@@ -23,17 +23,17 @@ export default function ShoppingOpen() {
   const [productTab, setProductTab] = useState('description');
 
   const imageUrls = [
-  'https://red-b9q9.onrender.com/public/Images/brush.jpg',
-  'https://red-b9q9.onrender.com/public/Images/straw.webp',
-  'https://red-b9q9.onrender.com/public/Images/tote.jpg',
-  'https://red-b9q9.onrender.com/public/Images/cutlery.jpg',
-  // 'https://red-b9q9.onrender.com/public/Images/wooden_comb.jpg',
-  'https://red-b9q9.onrender.com/public/Images/soap.webp',
-  'https://red-b9q9.onrender.com/public/Images/wrap.webp',
-  'https://red-b9q9.onrender.com/public/Images/notebook.webp',
-  'https://azafran.in/cdn/shop/articles/Skin_Care_Blog_File.jpg?v=1673428374&width=1024',
-  'https://m.media-amazon.com/images/I/616qF0EFs8L._AC_UF1000,1000_QL80_.jpg',
-];
+    'https://m.media-amazon.com/images/I/71edeKpYPpL.jpg',
+    'https://terrasmart.co/wp-content/uploads/2020/11/Jungle-Straws-Stainless-Steel-Set-Deep-Ocean-Blue-Red-3.jpg',
+    'https://m.media-amazon.com/images/I/61RtUsvISaL.AC_UY1000.jpg',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaeGkCcrFoHUhAMTzlmsuyGR2CMYt0TwtN4Q&s',
+    'https://www.beeswrap.com/cdn/shop/files/2022_BTS_Website_Update_2_1920x.png?v=1659014107',
+    'https://www.beeswrap.com/cdn/shop/files/2022_BTS_Website_Update_2_1920x.png?v=1659014107',
+    'https://viva-global.com/cdn/shop/files/Side-Green_15b6a54d-bdff-450f-929f-0489af3a6222.jpg?v=1715410702',
+    'https://azafran.in/cdn/shop/articles/Skin_Care_Blog_File.jpg?v=1673428374&width=1024',
+    'https://m.media-amazon.com/images/I/616qF0EFs8L._AC_UF1000,1000_QL80_.jpg',
+
+  ];
 
 
 
