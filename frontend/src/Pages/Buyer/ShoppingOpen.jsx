@@ -23,18 +23,18 @@ export default function ShoppingOpen() {
   const [productTab, setProductTab] = useState('description');
 
   const imageUrls = [
-    'http://192.168.137.32:5173/public/Images/brush.jpg',
-    'http://192.168.137.32:5173/public/Images/straw.webp',
-    'http://192.168.137.32:5173/public/Images/tote.jpg',
-    'http://192.168.137.32:5173/public/Images/cutlery.jpg',
-    //'http://192.168.137.32:5173/public/Images/wooden_comb.jpg',
-    'http://192.168.137.32:5173/public/Images/soap.webp',
-    'http://192.168.137.32:5173/public/Images/wrap.webp',
-    'http://192.168.137.32:5173/public/Images/notebook.webp',
-    'https://azafran.in/cdn/shop/articles/Skin_Care_Blog_File.jpg?v=1673428374&width=1024',
-    'https://m.media-amazon.com/images/I/616qF0EFs8L._AC_UF1000,1000_QL80_.jpg',
+  'https://red-b9q9.onrender.com/public/Images/brush.jpg',
+  'https://red-b9q9.onrender.com/public/Images/straw.webp',
+  'https://red-b9q9.onrender.com/public/Images/tote.jpg',
+  'https://red-b9q9.onrender.com/public/Images/cutlery.jpg',
+  // 'https://red-b9q9.onrender.com/public/Images/wooden_comb.jpg',
+  'https://red-b9q9.onrender.com/public/Images/soap.webp',
+  'https://red-b9q9.onrender.com/public/Images/wrap.webp',
+  'https://red-b9q9.onrender.com/public/Images/notebook.webp',
+  'https://azafran.in/cdn/shop/articles/Skin_Care_Blog_File.jpg?v=1673428374&width=1024',
+  'https://m.media-amazon.com/images/I/616qF0EFs8L._AC_UF1000,1000_QL80_.jpg',
+];
 
-  ];
 
 
   useEffect(() => {
