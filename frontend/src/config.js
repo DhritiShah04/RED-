@@ -1,5 +1,5 @@
 const config = {
-    API_BASE_URL: 'http://192.168.137.32:5000/api',
+    API_BASE_URL: 'https://red-b9q9.onrender.com/api',
   };
   
   export default config;
