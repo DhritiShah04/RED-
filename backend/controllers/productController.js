@@ -187,3 +187,202 @@ exports.totalRevenue = (req, res) => {
     }
   );
 };
+
+exports.getProductsBySellerId = (req, res) => {
+  const sellerId = req.params.sellerId;
+  
+  const sql = `
+    SELECT * FROM products 
+    WHERE product_seller_id = ? 
+    ORDER BY product_created_at DESC
+  `;
+  
+  db.query(sql, [sellerId], (err, results) => {
+    if (err) {
+      console.error("Error fetching seller products:", err);
+      return res.status(500).json({ 
+        status: false, 
+        message: "Failed to retrieve seller products",
+        error: err.message
+      });
+    }
+    
+    return res.status(200).json({ 
+      status: true,
+      message: "Seller products retrieved successfully",
+      data: results 
+    });
+  });
+},
+
+// Get eco-friendly products
+exports.getEcoFriendlyProducts = (req, res) => {
+  const minRating = req.query.rating || 4.0; // Default to 4.0 if not provided
+  
+  const sql = `
+    SELECT * FROM products 
+    WHERE product_eco_rating >= ? 
+    ORDER BY product_eco_rating DESC
+  `;
+  
+  db.query(sql, [minRating], (err, results) => {
+    if (err) {
+      console.error("Error fetching eco-friendly products:", err);
+      return res.status(500).json({ 
+        status: false, 
+        message: "Failed to retrieve eco-friendly products",
+        error: err.message
+      });
+    }
+    
+    return res.status(200).json({ 
+      status: true,
+      message: "Eco-friendly products retrieved successfully",
+      data: results 
+    });
+  });
+},
+
+// Get products by multiple filters
+exports.getFilteredProducts = (req, res) => {
+  const {
+    is_recyclable,
+    is_biodegradable,
+    is_reusable,
+    uses_organic_materials,
+    min_eco_rating,
+    max_price,
+    is_certified
+  } = req.query;
+  
+  let sql = "SELECT * FROM products WHERE 1=1";
+  const params = [];
+  
+  if (is_recyclable === 'true') {
+    sql += " AND is_recyclable = 1";
+  }
+  
+  if (is_biodegradable === 'true') {
+    sql += " AND is_biodegradable = 1";
+  }
+  
+  if (is_reusable === 'true') {
+    sql += " AND is_reusable = 1";
+  }
+  
+  if (uses_organic_materials === 'true') {
+    sql += " AND uses_organic_materials = 1";
+  }
+  
+  if (is_certified === 'true') {
+    sql += " AND is_certified = 1";
+  }
+  
+  if (min_eco_rating) {
+    sql += " AND product_eco_rating >= ?";
+    params.push(parseFloat(min_eco_rating));
+  }
+  
+  if (max_price) {
+    sql += " AND product_price <= ?";
+    params.push(parseFloat(max_price));
+  }
+  
+  sql += " ORDER BY product_eco_rating DESC";
+  
+  db.query(sql, params, (err, results) => {
+    if (err) {
+      console.error("Error fetching filtered products:", err);
+      return res.status(500).json({ 
+        status: false, 
+        message: "Failed to retrieve filtered products",
+        error: err.message
+      });
+    }
+    
+    return res.status(200).json({ 
+      status: true,
+      message: "Filtered products retrieved successfully",
+      data: results 
+    });
+  });
+},
+
+// Get product stats for seller dashboard
+exports.getProductStats = (req, res) => {
+  const sellerId = req.params.sellerId;
+  
+  // This combines multiple queries for dashboard stats
+  const sqlProductCount = "SELECT COUNT(*) as totalProducts FROM products WHERE product_seller_id = ?";
+  const sqlAvgEcoScore = "SELECT AVG(product_eco_rating) as avgEcoScore FROM products WHERE product_seller_id = ?";
+  const sqlCertifiedCount = "SELECT COUNT(*) as certifiedProducts FROM products WHERE product_seller_id = ? AND is_certified = 1";
+  const sqlProductList = `
+    SELECT 
+      product_id,
+      product_name,
+      product_eco_rating as ecoScore,
+      product_price as price,
+      product_stock_quantity as stock,
+      is_recyclable, 
+      is_biodegradable, 
+      is_reusable,
+      uses_organic_materials,
+      carbon_footprint_score
+    FROM products 
+    WHERE product_seller_id = ?
+  `;
+  
+  db.query(sqlProductCount, [sellerId], (err, countResults) => {
+    if (err) {
+      console.error("Error fetching product count:", err);
+      return res.status(500).json({ status: false, message: "Error fetching stats", error: err.message });
+    }
+    
+    db.query(sqlAvgEcoScore, [sellerId], (err, ecoResults) => {
+      if (err) {
+        console.error("Error fetching eco score:", err);
+        return res.status(500).json({ status: false, message: "Error fetching stats", error: err.message });
+      }
+      
+      db.query(sqlCertifiedCount, [sellerId], (err, certResults) => {
+        if (err) {
+          console.error("Error fetching certified count:", err);
+          return res.status(500).json({ status: false, message: "Error fetching stats", error: err.message });
+        }
+        
+        db.query(sqlProductList, [sellerId], (err, productResults) => {
+          if (err) {
+            console.error("Error fetching product list:", err);
+            return res.status(500).json({ status: false, message: "Error fetching stats", error: err.message });
+          }
+          
+          // Format products with eco tags
+          const products = productResults.map(product => {
+            const tags = [];
+            
+            if (product.is_recyclable) tags.push("Recyclable");
+            if (product.is_biodegradable) tags.push("Biodegradable");
+            if (product.is_reusable) tags.push("Reusable");
+            if (product.uses_organic_materials) tags.push("Organic Materials");
+            
+            return {
+              ...product,
+              tags
+            };
+          });
+          
+          return res.status(200).json({
+            status: true,
+            message: "Product stats retrieved successfully",
+            data: {
+              totalProducts: countResults[0].totalProducts,
+              avgEcoScore: parseFloat(ecoResults[0].avgEcoScore || 0).toFixed(2),
+              certifiedProducts: certResults[0].certifiedProducts,
+              products
+            }
+          });
+        });
+      });
+    });
+  });
+}

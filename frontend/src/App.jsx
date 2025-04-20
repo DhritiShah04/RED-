@@ -11,6 +11,7 @@ import Orders from "./Pages/Buyer/orders";
 import Shopping from "./Pages/Buyer/Shopping";
 import ShoppingOpen from "./Pages/Buyer/ShoppingOpen";
 import AboutUs from "./Pages/Buyer/AboutUs";
+import OrderSuccess from "./Pages/Buyer/order-success";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/shopping" element = {<Shopping/>}/>
           <Route path="/shopping/:id" element={<ShoppingOpen />} />
           <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/order-success" element={<OrderSuccess />} />
         </Routes>
   );
 }

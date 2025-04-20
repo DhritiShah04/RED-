@@ -64,7 +64,7 @@ const milestones = [
 
 const partners = [
   "Clean Ocean Initiative", "Sustainable Fashion Collective", 
-  "Zero Waste Alliance", "Blue Tech Foundation", 
+  "Zero Waste Alliance", "Green Tech Foundation", 
   "Renewable Energy Partners", "Plastic-Free Certification"
 ];
 
@@ -79,23 +79,23 @@ const AboutUs = () => {
   return (
     <> 
     <Navbar/>
-    <div className="min-h-screen bg-gradient-to-br from-[#e6f7ff] via-[#c2e0f4] to-[#a2c6e6] text-[#0a2e4a] px-4 sm:px-10 py-20 font-sans">
-      <motion.div 
+    <div className="min-h-screen bg-white text-[#1a472a] px-4 sm:px-10 py-20 font-sans">
+      {/* <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2 }}
-        className="absolute top-0 right-0 w-full h-full overflow-hidden z-0 opacity-20 pointer-events-none"
+        className="absolute top-0 right-0 w-full h-full overflow-hidden z-0 opacity-10 pointer-events-none"
       >
-        <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-blue-300 blur-3xl"></div>
-        <div className="absolute bottom-40 left-20 w-96 h-96 rounded-full bg-cyan-200 blur-3xl"></div>
-      </motion.div>
+        <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-green-300 blur-3xl"></div>
+        <div className="absolute bottom-40 left-20 w-96 h-96 rounded-full bg-emerald-200 blur-3xl"></div>
+      </motion.div> */}
 
       <div className="relative z-10">
         <motion.h1
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl sm:text-7xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-900 to-cyan-500"
+          className="text-5xl sm:text-7xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-emerald-500"
         >
           Eco Cart
         </motion.h1>
@@ -106,7 +106,7 @@ const AboutUs = () => {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="flex justify-center mt-6"
         >
-          <span className="px-4 py-2 bg-blue-100/70 backdrop-blur-sm rounded-full text-blue-800 text-sm font-medium border border-blue-300">
+          <span className="px-4 py-2 bg-green-50 rounded-full text-green-800 text-sm font-medium border border-green-200">
             Shop Green • Live Clean • Feel Amazing
           </span>
         </motion.div>
@@ -115,11 +115,11 @@ const AboutUs = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.7 }}
-          className="text-center text-blue-900 mt-6 max-w-3xl mx-auto text-lg leading-relaxed"
+          className="text-center text-green-800 mt-6 max-w-3xl mx-auto text-lg leading-relaxed"
         >
           We're rewriting the rules of shopping—making it greener, smarter, and hella sexier. 
           Your cart can now fight climate change, one swap at a time. 
-          <span className="text-2xl">💙</span>
+          <span className="text-2xl">💚</span>
         </motion.p>
 
         <motion.div 
@@ -139,14 +139,14 @@ const AboutUs = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.8 }}
-        className="relative mx-auto mt-16 max-w-4xl overflow-hidden rounded-xl shadow-xl border-4 border-white/30 backdrop-blur"
+        className="relative mx-auto mt-16 max-w-4xl overflow-hidden rounded-xl shadow-lg border border-green-100"
       >
-        <div className="aspect-w-16 aspect-h-9 bg-blue-800/20 flex items-center justify-center">
+        <div className="aspect-w-16 aspect-h-9 bg-green-50 flex items-center justify-center">
           <div className="text-center p-8">
-            <div className="w-20 h-20 mx-auto rounded-full bg-white/30 backdrop-blur flex items-center justify-center mb-4">
+            <div className="w-20 h-20 mx-auto rounded-full bg-green-100 flex items-center justify-center mb-4">
               <span className="text-3xl">▶️</span>
             </div>
-            <p className="text-blue-900 font-medium">Our journey to reinvent sustainable shopping</p>
+            <p className="text-green-800 font-medium">Our journey to reinvent sustainable shopping</p>
           </div>
         </div>
       </motion.div>
@@ -162,7 +162,7 @@ const AboutUs = () => {
         <div className="mt-8">
           {activeTab === "mission" && (
             <Section
-              title="🌊 Why We Exist"
+              title="🌱 Why We Exist"
               desc={`Every day, we make choices that impact the planet. But we're not here to guilt you—we're here to guide you.
 
 Fast fashion? Ghosted.
@@ -180,7 +180,7 @@ Our mission is simple: make sustainability the sexy default choice. No more comp
               title="📊 Our Impact So Far"
               desc={`✨ 15,000+ kg CO₂ emissions avoided  
 💧 95,000+ liters of water saved  
-🌊 5,200+ eco-swaps made
+🌱 5,200+ eco-swaps made
 💰 ₹1.2M channeled to ethical producers
 🌎 25+ local communities supported
 
@@ -212,33 +212,6 @@ Every decision at EcoCart passes through our triple filter: Is it good for you? 
         </div>
       </div>
 
-      {/* Timeline */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="mt-32 max-w-4xl mx-auto"
-      >
-        <h2 className="text-4xl font-bold text-center mb-14 text-blue-900">
-          Our Journey So Far
-        </h2>
-        
-        <div className="relative">
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-300"></div>
-          
-          {milestones.map((milestone, index) => (
-            <div key={index} className={`relative mb-12 ${index % 2 === 0 ? 'text-right pr-12 md:ml-auto md:mr-auto md:pr-0 md:pl-0 md:text-right' : 'text-left pl-12 md:mr-auto md:ml-auto md:pl-0 md:pr-0 md:text-left'}`}>
-              <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:ml-auto' : 'md:mr-auto'}`}>
-                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-blue-500 border-4 border-white"></div>
-                <div className="bg-white/60 backdrop-blur-sm p-4 rounded-lg shadow-md border border-blue-200">
-                  <span className="font-bold text-blue-800 text-xl">{milestone.year}</span>
-                  <p className="text-blue-700">{milestone.event}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
 
       {/* Partners */}
       <motion.div
@@ -247,48 +220,17 @@ Every decision at EcoCart passes through our triple filter: Is it good for you? 
         transition={{ duration: 0.8 }}
         className="mt-32"
       >
-        <h2 className="text-4xl font-bold text-center mb-6 text-blue-900">
-          Our Blue Planet Partners
+        <h2 className="text-4xl font-bold text-center mb-6 text-green-800">
+          Our Green Planet Partners
         </h2>
-        <p className="text-center text-blue-800 mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-green-700 mb-12 max-w-2xl mx-auto">
           We're proud to collaborate with organizations that share our vision for a sustainable future
         </p>
         
         <div className="flex flex-wrap justify-center gap-4">
           {partners.map((partner, index) => (
-            <div key={index} className="bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full border border-blue-200 shadow-sm hover:shadow-md transition-all">
-              <span className="text-blue-800 font-medium">{partner}</span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Testimonials */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="mt-32"
-      >
-        <h2 className="text-4xl font-bold text-center mb-14 text-blue-900">
-          What Our Community Says
-        </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <div 
-              key={index} 
-              className="bg-white/60 backdrop-blur-sm p-6 rounded-lg shadow-lg border border-blue-200 hover:shadow-xl transition-all"
-            >
-              <div className="text-blue-600 text-4xl mb-4">"</div>
-              <p className="text-blue-800 italic mb-4">{testimonial.text}</p>
-              <div className="flex items-center mt-4">
-                <div className="w-10 h-10 rounded-full bg-blue-200 flex-shrink-0"></div>
-                <div className="ml-3">
-                  <p className="font-medium text-blue-900">{testimonial.name}</p>
-                  <p className="text-blue-700 text-sm">{testimonial.location}</p>
-                </div>
-              </div>
+            <div key={index} className="bg-green-50 px-6 py-3 rounded-full border border-green-100 shadow-sm hover:shadow-md transition-all">
+              <span className="text-green-800 font-medium">{partner}</span>
             </div>
           ))}
         </div>
@@ -301,10 +243,10 @@ Every decision at EcoCart passes through our triple filter: Is it good for you? 
         transition={{ delay: 0.4 }}
         className="mt-32"
       >
-        <h2 className="text-4xl font-bold text-center mb-6 text-blue-900">
-          🌊 Meet the Dream Blue Team
+        <h2 className="text-4xl font-bold text-center mb-6 text-green-800">
+          🌱 Meet the Dream Green Team
         </h2>
-        <p className="text-center text-blue-800 mb-14 max-w-2xl mx-auto">
+        <p className="text-center text-green-700 mb-14 max-w-2xl mx-auto">
           Passionate eco-warriors with a knack for making sustainability simple, sexy, and accessible
         </p>
         
@@ -316,32 +258,32 @@ Every decision at EcoCart passes through our triple filter: Is it good for you? 
               transition={{ delay: index * 0.1, duration: 0.5 }}
               whileHover={{ y: -5 }}
               key={index}
-              className="bg-white/60 backdrop-blur-xl p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-blue-300"
+              className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-green-100"
             >
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-24 h-24 rounded-full border-4 border-blue-500 object-cover shadow-md"
+                  className="w-24 h-24 rounded-full border-4 border-green-500 object-cover shadow-md"
                 />
                 <div>
-                  <h3 className="text-xl font-semibold text-center sm:text-left mt-4 sm:mt-0 text-blue-900">
+                  <h3 className="text-xl font-semibold text-center sm:text-left mt-4 sm:mt-0 text-green-800">
                     {member.name}
                   </h3>
-                  <p className="text-blue-700 text-sm text-center sm:text-left">
+                  <p className="text-green-700 text-sm text-center sm:text-left">
                     {member.role}
                   </p>
-                  <p className="text-blue-800 text-sm mt-3">
+                  <p className="text-green-700 text-sm mt-3">
                     {member.desc}
                   </p>
                   <div className="mt-4 flex flex-col gap-2">
                     <div className="flex items-center">
-                      <span className="text-blue-600 mr-2">✨</span>
-                      <span className="text-sm text-blue-800">Fun fact: {member.fun}</span>
+                      <span className="text-green-600 mr-2">✨</span>
+                      <span className="text-sm text-green-700">Fun fact: {member.fun}</span>
                     </div>
                     <div className="flex items-center">
-                      <span className="text-blue-600 mr-2">💙</span>
-                      <span className="text-sm text-blue-800">Favorite eco product: {member.favorite}</span>
+                      <span className="text-green-600 mr-2">💚</span>
+                      <span className="text-sm text-green-700">Favorite eco product: {member.favorite}</span>
                     </div>
                   </div>
                 </div>
@@ -356,20 +298,17 @@ Every decision at EcoCart passes through our triple filter: Is it good for you? 
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="mt-32 text-center max-w-4xl mx-auto bg-gradient-to-br from-blue-100/80 to-blue-200/80 backdrop-blur-sm p-12 rounded-3xl border border-blue-200 shadow-lg"
+        className="mt-32 text-center max-w-4xl mx-auto bg-green-50 p-12 rounded-3xl border border-green-100 shadow-lg"
       >
-        <h2 className="text-4xl font-bold mb-6 text-blue-900">
+        <h2 className="text-4xl font-bold mb-6 text-green-800">
           Ready to Shop Like Your Future Depends On It?
         </h2>
-        <p className="text-blue-800 text-lg mb-8">
+        <p className="text-green-700 text-lg mb-8">
           Because it kinda does. Join our community of conscious consumers who refuse to compromise between style and sustainability.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
-          <button className="px-8 py-3 bg-blue-800 text-white rounded-full font-medium hover:bg-blue-700 transition-all shadow-md hover:shadow-lg">
+          <button className="px-8 py-3 bg-green-700 text-white rounded-full font-medium hover:bg-green-600 transition-all shadow-md hover:shadow-lg">
             Start Shopping Green
-          </button>
-          <button className="px-8 py-3 bg-white/60 backdrop-blur-sm text-blue-800 rounded-full font-medium border border-blue-300 hover:bg-white/80 transition-all shadow-md hover:shadow-lg">
-            Join Our Newsletter
           </button>
         </div>
       </motion.div>
@@ -386,10 +325,10 @@ const Section = ({ title, desc }) => (
     transition={{ duration: 0.6 }}
     className="text-center max-w-5xl mx-auto px-4"
   >
-    <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-blue-800">
+    <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-green-800">
       {title}
     </h2>
-    <p className="text-blue-900 text-md sm:text-lg leading-relaxed whitespace-pre-line">
+    <p className="text-green-700 text-md sm:text-lg leading-relaxed whitespace-pre-line">
       {desc}
     </p>
   </motion.div>
@@ -397,9 +336,9 @@ const Section = ({ title, desc }) => (
 
 // Stats Box Component
 const StatsBox = ({ number, label }) => (
-  <div className="bg-white/40 backdrop-blur-sm p-4 rounded-xl shadow-md border border-blue-200 w-40 text-center hover:shadow-lg transition-all">
-    <div className="text-2xl font-bold text-blue-800">{number}</div>
-    <div className="text-blue-700 text-sm">{label}</div>
+  <div className="bg-green-50 p-4 rounded-xl shadow-md border border-green-100 w-40 text-center hover:shadow-lg transition-all">
+    <div className="text-2xl font-bold text-green-700">{number}</div>
+    <div className="text-green-600 text-sm">{label}</div>
   </div>
 );
 
@@ -409,8 +348,8 @@ const TabButton = ({ active, onClick, label }) => (
     onClick={onClick}
     className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
       active 
-        ? "bg-blue-800 text-white shadow-md" 
-        : "bg-white/40 backdrop-blur-sm text-blue-800 border border-blue-200 hover:bg-white/60"
+        ? "bg-green-700 text-white shadow-md" 
+        : "bg-green-50 text-green-700 border border-green-200 hover:bg-green-100"
     }`}
   >
     {label}

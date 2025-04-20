@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import NavbarSell from "../../Components/NavbarSell";
 import Footer from "../../Components/Footer";
 import jsPDF from "jspdf";
@@ -18,7 +18,7 @@ const downloadPDF = (type, productList) => {
       p.ecoScore,
       p.avgFeedback,
       p.category,
-      p.tags.join(", "),
+      (p.tags ? p.tags.join(", ") : "N/A"),
     ]);
     autoTable(doc, { startY: 30, head: headers, body: data });
   } else {
@@ -37,7 +37,7 @@ const downloadPDF = (type, productList) => {
 };
 
 const ProductStats = () => {
-  const productList = [
+  const [productList] = useState([
     {
       name: "Reusable Bamboo Straw",
       ecoScore: 4.2,
@@ -66,7 +66,6 @@ const ProductStats = () => {
       sold: 180,
       avgFeedback: 4.7,
       category: "Bags",
-     
       tags: ["Reused Materials", "Recyclable", "Green Packaging"],
     },
     {
@@ -77,49 +76,69 @@ const ProductStats = () => {
       sold: 130,
       avgFeedback: 4.8,
       category: "Clothing",
-      
       tags: ["Low Carbon Footprint", "Local Purchase", "Biodegradable"],
     },
-  ];
+  ]);
 
-  const tagColors = {
-    "Plastic-Free": "bg-green-100 text-green-800",
-    Reusable: "bg-blue-100 text-blue-800",
-    Recyclable: "bg-yellow-100 text-yellow-800",
-    Biodegradable: "bg-lime-100 text-lime-800",
-    "Zero Waste": "bg-pink-100 text-pink-800",
-    "Reused Materials": "bg-purple-100 text-purple-800",
-    "Green Packaging": "bg-cyan-100 text-cyan-800",
-    "Low Carbon Footprint": "bg-orange-100 text-orange-800",
-    "Local Purchase": "bg-teal-100 text-teal-800",
+  const [stats, setStats] = useState({
+    totalProducts: 0,
+    ecoScoreAvg: 0,
+    avgFeedback: 0,
+    avgPrice: 0,
+    mostExpensive: { name: "-", price: 0 },
+    cheapest: { name: "-", price: 0 }
+  });
+
+  useEffect(() => {
+    calculateStats(productList);
+  }, [productList]);
+
+  const calculateStats = (products) => {
+    const totalProducts = products.length;
+    const ecoScoreAvg = (products.reduce((sum, p) => sum + p.ecoScore, 0) / totalProducts).toFixed(2);
+    const avgFeedback = (products.reduce((sum, p) => sum + p.avgFeedback, 0) / totalProducts).toFixed(2);
+    const avgPrice = Math.round(products.reduce((sum, p) => sum + p.price, 0) / totalProducts);
+
+    const mostExpensive = products.reduce((prev, curr) => 
+      curr.price > prev.price ? curr : prev, { name: "-", price: 0 });
+    
+    const cheapest = products.reduce((prev, curr) => 
+      curr.price < prev.price ? curr : prev, { name: "-", price: 0 });
+
+    setStats({
+      totalProducts,
+      ecoScoreAvg,
+      avgFeedback,
+      avgPrice,
+      mostExpensive: {
+        name: mostExpensive.name,
+        price: mostExpensive.price
+      },
+      cheapest: {
+        name: cheapest.name,
+        price: cheapest.price
+      }
+    });
   };
-
-  const totalProducts = productList.length;
-  const ecoScoreAvg = (productList.reduce((sum, p) => sum + p.ecoScore, 0) / totalProducts).toFixed(2);
-  const avgFeedback = (productList.reduce((sum, p) => sum + p.avgFeedback, 0) / totalProducts).toFixed(2);
-  const avgPrice = Math.round(productList.reduce((sum, p) => sum + p.price, 0) / totalProducts);
-  const mostExpensive = productList.reduce((prev, curr) => (curr.price > prev.price ? curr : prev));
-  const cheapest = productList.reduce((prev, curr) => (curr.price < prev.price ? curr : prev));
-  
 
   return (
     <div className="bg-gradient-to-br from-green-50 to-white min-h-screen">
       <NavbarSell />
 
       <div className="container mx-auto py-10 px-4">
-      <p className="pb-4 text-4xl sm:text-5xl md:text-6xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-700 via-lime-600 to-yellow-500 drop-shadow-lg tracking-wide">
-            Statistics
-          </p>  
+        <p className="pb-4 text-4xl sm:text-5xl md:text-6xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-700 via-lime-600 to-yellow-500 drop-shadow-lg tracking-wide">
+          Statistics
+        </p>
         <div className="w-32 h-1 mt-4 mx-auto bg-gradient-to-r from-green-500 to-lime-400 rounded-full animate-pulse"></div>
 
         {/* Stats Cards */}
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-3 xl:grid-cols-3 h-96 w-[1300px] ml-20 mt-12 mb-16">
-          <StatCard title="🛍 Total Products" value={totalProducts} />
-          <StatCard title="🌿 Avg. EcoScore" value={ecoScoreAvg} />
-          <StatCard title="⭐ Avg. Feedback" value={avgFeedback} />
-          <StatCard title="💸 Avg. Price" value={`₹${avgPrice}`} />
-          <StatCard title="🏆 Most Expensive" value={`${mostExpensive.name} (₹${mostExpensive.price})`} />
-          <StatCard title="💰 Cheapest" value={`${cheapest.name} (₹${cheapest.price})`} />
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 h-auto w-full mt-12 mb-16">
+          <StatCard title="🛍 Total Products" value={stats.totalProducts} />
+          <StatCard title="🌿 Avg. EcoScore" value={stats.ecoScoreAvg} />
+          <StatCard title="⭐ Avg. Feedback" value={stats.avgFeedback} />
+          <StatCard title="💸 Avg. Price" value={`₹${stats.avgPrice}`} />
+          <StatCard title="🏆 Most Expensive" value={`${stats.mostExpensive.name} (₹${stats.mostExpensive.price})`} />
+          <StatCard title="💰 Cheapest" value={`${stats.cheapest.name} (₹${stats.cheapest.price})`} />
         </div>
 
         {/* Product Listing */}
@@ -144,7 +163,7 @@ const ProductStats = () => {
                     {product.tags.map((tag, idx) => (
                       <span
                         key={idx}
-                        className={`text-xs font-medium px-3 py-1 rounded-full ${tagColors[tag] || "bg-gray-100 text-gray-800"}`}
+                        className="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 text-gray-800"
                       >
                         {tag}
                       </span>

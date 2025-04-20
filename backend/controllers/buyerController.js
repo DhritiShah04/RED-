@@ -1,12 +1,32 @@
 const db = require('../config/db');
 
 exports.createBuyer = (req, res) => {
-  const { buyer_name, buyer_email, buyer_password } = req.body;
-  const query = `INSERT INTO user_buyer (buyer_name, buyer_email, buyer_password) VALUES (?, ?, ?)`;
-  db.query(query, [buyer_name, buyer_email, buyer_password], (err, result) => {
-    if (err) return res.status(500).send(err);
-    res.status(201).send({ buyer_id: result.insertId });
-  });
+  const { 
+    buyer_name, 
+    buyer_email, 
+    buyer_password, 
+    buyer_phone_number, 
+    buyer_address, 
+    buyer_pincode 
+  } = req.body;
+
+  const query = `
+    INSERT INTO user_buyer 
+    (buyer_name, buyer_email, buyer_password, buyer_phone_number, buyer_address, buyer_pincode) 
+    VALUES (?, ?, ?, ?, ?, ?)
+  `;
+
+  db.query(
+    query, 
+    [buyer_name, buyer_email, buyer_password, buyer_phone_number, buyer_address, buyer_pincode], 
+    (err, result) => {
+      if (err) {
+        console.error("Error inserting buyer:", err);
+        return res.status(500).send({ error: "Database insertion failed" });
+      }
+      res.status(201).send({ buyer_id: result.insertId });
+    }
+  );
 };
 
 exports.getAllBuyers = (req, res) => {

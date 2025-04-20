@@ -89,7 +89,7 @@ const CategoryGrid = () => {
         {categories.map((cat, idx) => (
           <div
             key={idx}
-            className="bg-pink-50 rounded-lg shadow-md overflow-hidden flex flex-col items-center text-center"
+            className="bg-green-50 rounded-lg shadow-md overflow-hidden flex flex-col items-center text-center"
           >
             <img
               src={cat.image}
@@ -99,7 +99,6 @@ const CategoryGrid = () => {
             <div className="p-3">
               <h3 className="font-medium">{cat.title}</h3>
               <p className="text-xl font-bold">{cat.discount}</p>
-              <button className="text-black text-sm mt-1 hover:underline">Shop Now</button>
             </div>
           </div>
         ))}

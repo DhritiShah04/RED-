@@ -114,7 +114,7 @@ const AddProduct = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        `${config.API_BASE_URL}/api/products`,
+        `${config.API_BASE_URL}/products`,
         formData,
         {
           headers: {
@@ -174,6 +174,7 @@ const AddProduct = () => {
   return (
     <>
       <NavbarSell />
+      
       <div className="p-6 md:p-10 bg-[#F3F6F4] min-h-screen">
         <div className="max-w-5xl mx-auto bg-white rounded-3xl border border-green-500 p-10 space-y-10 transition duration-500 hover:scale-[1.01] hover:shadow-[0_0_40px_#4CAF50]">
           <h2 className="text-3xl font-bold text-[#216869]">🌱 Add New Product</h2>

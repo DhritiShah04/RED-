@@ -58,8 +58,8 @@ const AuthPage = () => {
     } else {
       endpoint =
         role === "buyer"
-          ? "${config.API_BASE_URL}/buyers"
-          : "${config.API_BASE_URL}/sellers";
+          ? `${config.API_BASE_URL}/buyers`
+          : `${config.API_BASE_URL}/sellers`;
     }
 
     try {

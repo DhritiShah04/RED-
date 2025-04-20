@@ -1,11 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../public/Images/logo.jpg";
+import axios from "axios";
+import config from '../config.js';
 
 export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [buyerDetails, setBuyerDetails] = useState(null); // State to store buyer details
   const location = useLocation(); // Get current location to check active path
 
   useEffect(() => {
@@ -13,6 +16,24 @@ export default function Navbar() {
     if (token) {
       setIsAuthenticated(true);
     }
+  }, []);
+
+  useEffect(() => {
+    const buyer_id = localStorage.getItem("buyer_id");
+    const token = localStorage.getItem("token");
+      axios
+        .get(`${config.API_BASE_URL}/buyers/${buyer_id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,  // Add token in Authorization header
+          },
+        })
+        .then((response) => {
+          setBuyerDetails(response.data); 
+          console.log(response.data); // Log the buyer details to console
+        })
+        .catch((error) => {
+          console.error("Error fetching buyer details:", error);
+        });
   }, []);
 
   useEffect(() => {
@@ -29,7 +50,7 @@ export default function Navbar() {
   const isActive = (path) => location.pathname === path ? "text-blue-500" : "text-gray-700 dark:text-white";
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-md relative z-50">
+    <nav className="bg-gradient-to-r from-green-900 to-black border-gray-200 dark:bg-green-950 shadow-md relative z-50">
       <div className="max-w-screen-xl w-full px-8 flex items-center justify-between py-4">
         {/* LEFT: Logo + Nav Links */}
         <div className="flex items-center gap-12">
@@ -60,11 +81,6 @@ export default function Navbar() {
             <i className="fa-solid fa-cart-shopping text-2xl text-white"></i>
           </Link>
 
-          {/* Wishlist */}
-          <Link to="/wishlist">
-            <i className="fa-regular fa-heart text-2xl text-white"></i>
-          </Link>
-
           {/* Profile or Auth Buttons */}
           <div className="relative" ref={dropdownRef}>
             {isAuthenticated ? (
@@ -75,20 +91,25 @@ export default function Navbar() {
                   className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                 >
                   <span className="sr-only">Open user menu</span>
-                  <img
-                    className="w-10 h-10 rounded-full"
-                    src="/docs/images/people/profile-picture-3.jpg"
-                    alt="user"
-                  />
+                  <span className="w-10 h-10 text-white text-2xl">🌳</span> {/* Tree emoji */}
                 </button>
 
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-lg z-50 divide-y divide-gray-100 dark:divide-gray-600">
                     <div className="px-4 py-3">
-                      <span className="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-                      <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
-                        name@flowbite.com
-                      </span>
+                      {/* Show buyer's name and email if buyerDetails is available */}
+                      {buyerDetails ? (
+                        <>
+                          <span className="block text-sm text-gray-900 dark:text-white">{buyerDetails.buyer_name}</span>
+                          <span className="block text-sm text-gray-500 truncate dark:text-gray-400">{buyerDetails.buyer_email}</span>
+                        </>
+                      ) : (
+                        // Fallback if buyerDetails is not yet available
+                        <>
+                          <span className="block text-sm text-gray-900 dark:text-white">Loading...</span>
+                          <span className="block text-sm text-gray-500 truncate dark:text-gray-400">Please wait...</span>
+                        </>
+                      )}
                     </div>
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                       <li>
@@ -103,6 +124,7 @@ export default function Navbar() {
                         <button
                           onClick={() => {
                             localStorage.removeItem("token");
+                            localStorage.removeItem("buyer_id"); // Remove buyer_id as well
                             setIsAuthenticated(false);
                             setDropdownOpen(false);
                           }}
@@ -121,13 +143,7 @@ export default function Navbar() {
                   to="/login"
                   className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md"
                 >
-                  Log In
-                </Link>
-                <Link
-                  to="/signup"
-                  className="text-white border border-blue-600 hover:bg-blue-600 px-4 py-2 rounded-md"
-                >
-                  Sign Up
+                  Log In / Sign Up
                 </Link>
               </div>
             )}

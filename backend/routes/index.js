@@ -24,14 +24,14 @@ router.post('/login/seller', authController.loginSeller);
 // Seller Routes (protected)
 router.post('/sellers', sellerController.createSeller); // open for registration
 router.get('/sellers', authenticate, authorizeRole('admin'), sellerController.getAllSellers);
-router.get('/sellers/:id', authenticate, authorizeRole('seller'), sellerController.getSellerById);
-router.put('/sellers/:id', authenticate, authorizeRole('seller'), sellerController.updateSeller);
+router.get('/sellers/:id', authenticate,sellerController.getSellerById);
+router.put('/sellers/:id', authenticate,sellerController.updateSeller);
 router.delete('/sellers/:id', authenticate, authorizeRole('admin'), sellerController.deleteSeller);
 
 // Buyer Routes (some open, some protected)
 router.post('/buyers', buyerController.createBuyer); // open for registration
 router.get('/buyers', authenticate, authorizeRole('admin'), buyerController.getAllBuyers);
-router.get('/buyers/:id', authenticate, authorizeRole('buyer'), buyerController.getBuyerById);
+router.get('/buyers/:id', authenticate,buyerController.getBuyerById);
 router.put('/buyers/:id', authenticate, authorizeRole('buyer'), buyerController.updateBuyer);
 router.delete('/buyers/:id', authenticate, authorizeRole('admin'), buyerController.deleteBuyer);
 // Buyer Routes (some open, some protected)
@@ -47,10 +47,12 @@ router.get('/products', productController.getAllProducts);
 router.get('/products/:id', productController.getProductById);
 router.put('/products/:id', authenticate, authorizeRole('seller'), productController.updateProduct);
 router.delete('/products/:id', authenticate, authorizeRole('seller'), productController.deleteProduct);
-router.put('/products/:id', authenticate, authorizeRole('seller'), productController.updateProduct);
-router.delete('/products/:id', authenticate, authorizeRole('seller'), productController.deleteProduct);
 router.get('/products/total/:id', authenticate, authorizeRole('seller'), productController.totalProducts);
 router.get('/products/totalrevenue/:id', authenticate, authorizeRole('seller'), productController.totalRevenue);
+router.get('/sellers/:sellerId/products', authenticate, productController.getProductsBySellerId);
+router.get('/eco-products', authenticate, productController.getEcoFriendlyProducts);
+router.get('/filter-products', authenticate, productController.getFilteredProducts);
+router.get('/sellers/:sellerId/stats', authenticate, productController.getProductStats);
 
 // Eco Details Routes (protected)
 router.post('/eco-details', authenticate, authorizeRole('seller'), ecoDetailsController.createEcoDetails);
