@@ -7,7 +7,7 @@ const routes = require('./routes/index');
 const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://red-b9q9.onrender.com',
+  'https://red-qicz-dhritishah04s-projects.vercel.app/',
 ];
 
 
